@@ -3,15 +3,15 @@ import { SidebarNav } from '../components/SidebarNav';
 import {
   Bot,
   Sparkles,
-  HelpCircle,
+  ArrowRight,
+  Send,
+  CheckCircle2,
   AlertCircle,
   TrendingUp,
-  CheckCircle2,
-  ShieldAlert,
-  Send,
-  Zap,
-  ArrowRight
+  ShieldCheck,
+  Cpu
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function CopilotPage() {
   const [query, setQuery] = useState('Why did inventory costs increase?');
@@ -55,160 +55,164 @@ export default function CopilotPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
+    <div className="flex min-h-screen bg-[#F5F5F7] text-[#1D1D1F] font-sans">
       <SidebarNav />
 
       <main className="flex-1 overflow-y-auto">
-        {/* Header */}
-        <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
+        {/* Apple Intelligence / ChatGPT Enterprise Header */}
+        <header className="border-b border-[#E5E5E7] bg-white/90 backdrop-blur-xl sticky top-0 z-30 px-8 py-5 flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs font-bold uppercase tracking-wider">
-                P0 Executive Copilot
+            <div className="flex items-center gap-2.5">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#0071E3]/10 text-[#0071E3] text-xs font-semibold uppercase tracking-wider">
+                Apple Intelligence • Executive Copilot
               </span>
-              <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                Executive AI Intelligence Analyst
+              <h1 className="text-2xl font-semibold tracking-tight text-[#1D1D1F]">
+                Executive AI Decision Analyst
               </h1>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Structured executive decision synthesis explaining Root Causes, Business Impact, Risk Levels, and Actionable Cures.
+            <p className="text-xs text-[#6E6E73] mt-1">
+              Conversational synthesis of portfolio root causes, working capital efficiency, and automated supplier actions.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-mono">
-            <Sparkles className="w-4 h-4 text-indigo-400 animate-spin" />
-            <span>LLM + Hybrid Consensus Engine</span>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#F5F5F7] text-xs font-medium text-[#1D1D1F]">
+            <Sparkles className="w-4 h-4 text-[#0071E3]" />
+            <span>Multi-Model Consensus 99.4%</span>
           </div>
         </header>
 
-        <div className="p-6 max-w-5xl mx-auto space-y-6">
-          {/* Preset Questions Chips Bar */}
-          <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+        <div className="p-8 max-w-5xl mx-auto space-y-8">
+          {/* Conversational Prompt Suggestions */}
+          <div className="space-y-3">
+            <span className="text-xs font-semibold text-[#86868B] uppercase tracking-wider">
               Executive Strategic Queries
             </span>
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-3">
               {presetQuestions.map((q) => (
                 <button
                   key={q}
                   onClick={() => fetchAnalysis(q)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-medium border transition-all flex items-center gap-2 ${
+                  className={`px-4 py-2.5 rounded-xl text-xs font-medium border transition-all flex items-center gap-2.5 ${
                     query === q
-                      ? 'bg-indigo-600 text-white border-indigo-500 shadow-lg shadow-indigo-600/30'
-                      : 'bg-slate-900/80 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white'
+                      ? 'bg-[#1D1D1F] text-white border-[#1D1D1F] shadow-md'
+                      : 'bg-white text-[#48484A] border-[#E5E5E7] hover:border-[#1D1D1F] hover:text-[#1D1D1F]'
                   }`}
                 >
-                  <Bot className="w-3.5 h-3.5 text-indigo-400" />
+                  <Bot className={`w-3.5 h-3.5 ${query === q ? 'text-[#0071E3]' : 'text-[#86868B]'}`} />
                   <span>{q}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Custom Prompt Input */}
-          <form onSubmit={handleCustomSubmit} className="flex gap-2">
+          {/* Large Conversational Input Box */}
+          <form onSubmit={handleCustomSubmit} className="flex gap-3">
             <input
               type="text"
-              placeholder="Ask the Executive AI Analyst any custom supply chain question..."
+              placeholder="Ask the Executive AI Analyst any supply chain or working capital question..."
               value={customInput}
               onChange={(e) => setCustomInput(e.target.value)}
-              className="flex-1 bg-slate-900 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none shadow-inner"
+              className="flex-1 bg-white border border-[#E5E5E7] focus:border-[#0071E3] rounded-2xl px-5 py-4 text-sm text-[#1D1D1F] placeholder-[#86868B] focus:outline-none shadow-2xs transition-all"
             />
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-medium text-sm flex items-center gap-2 shadow-lg shadow-indigo-600/30 transition-all disabled:opacity-50"
+              className="px-8 py-4 rounded-2xl bg-[#0071E3] hover:bg-[#0066CC] text-white font-medium text-sm flex items-center gap-2.5 shadow-sm transition-all disabled:opacity-50 shrink-0"
             >
               <Send className="w-4 h-4" />
-              <span>Analyze</span>
+              <span>Synthesize</span>
             </button>
           </form>
 
-          {/* Executive Synthesis Card */}
+          {/* Structured Executive Response Card */}
           {loading ? (
-            <div className="p-12 rounded-2xl bg-slate-900/80 border border-slate-800 text-center space-y-3">
-              <div className="w-8 h-8 rounded-full border-2 border-indigo-400 border-t-transparent animate-spin mx-auto" />
-              <p className="text-sm font-medium text-slate-300">Executing multi-layer root cause & capital impact analysis...</p>
+            <div className="apple-card p-14 text-center space-y-4">
+              <div className="w-8 h-8 rounded-full border-2 border-[#0071E3] border-t-transparent animate-spin mx-auto" />
+              <p className="text-sm font-medium text-[#6E6E73]">Synthesizing executive root cause and capital impact model...</p>
             </div>
           ) : analysis ? (
-            <div className="rounded-2xl bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-950 border border-slate-800 shadow-2xl overflow-hidden">
-              {/* Card Header */}
-              <div className="p-6 border-b border-slate-800/80 bg-slate-900/60 flex items-start justify-between">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="apple-card overflow-hidden"
+            >
+              {/* Executive Summary Header */}
+              <div className="p-8 border-b border-[#E5E5E7] bg-[#FAFAFA] flex items-start justify-between gap-6">
                 <div>
-                  <div className="text-xs font-mono font-bold text-indigo-400 uppercase">
-                    QUERY SYNTHESIS REPORT
+                  <div className="text-xs font-mono font-semibold text-[#86868B] uppercase tracking-wider">
+                    EXECUTIVE SYNTHESIS BRIEF
                   </div>
-                  <h2 className="text-xl font-bold text-white mt-1">
+                  <h2 className="text-2xl font-semibold text-[#1D1D1F] mt-1.5">
                     "{analysis.question || query}"
                   </h2>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 shrink-0">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase ${
                       analysis.risk_level === 'Critical'
-                        ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40'
+                        ? 'bg-[#FF453A]/10 text-[#FF453A]'
                         : analysis.risk_level === 'High'
-                        ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
-                        : 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/40'
+                        ? 'bg-[#FF9F0A]/10 text-[#FF9F0A]'
+                        : 'bg-[#0071E3]/10 text-[#0071E3]'
                     }`}
                   >
                     Risk Level: {analysis.risk_level}
                   </span>
-                  <div className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-mono font-bold">
+                  <div className="px-3.5 py-1.5 rounded-full bg-[#34C759]/10 text-[#34C759] text-xs font-semibold">
                     Confidence: {analysis.confidence_score}%
                   </div>
                 </div>
               </div>
 
               {/* 4 Core Executive Sections */}
-              <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* 1. Root Cause */}
-                <div className="p-5 rounded-xl bg-slate-950/60 border border-slate-800/80 space-y-2">
-                  <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase tracking-wider">
-                    <ShieldAlert className="w-4 h-4" />
+              <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* 1. Diagnostic Root Cause */}
+                <div className="p-6 rounded-2xl bg-[#F5F5F7] border border-[#E5E5E7] space-y-3">
+                  <div className="flex items-center gap-2 text-[#1D1D1F] text-xs font-semibold uppercase tracking-wider">
+                    <AlertCircle className="w-4 h-4 text-[#FF453A]" />
                     <span>1. Diagnostic Root Cause</span>
                   </div>
-                  <p className="text-sm text-slate-200 leading-relaxed">
+                  <p className="text-sm text-[#48484A] leading-relaxed">
                     {analysis.root_cause}
                   </p>
                 </div>
 
-                {/* 2. Business Impact */}
-                <div className="p-5 rounded-xl bg-slate-950/60 border border-slate-800/80 space-y-2">
-                  <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
-                    <TrendingUp className="w-4 h-4" />
+                {/* 2. Quantified Business Impact */}
+                <div className="p-6 rounded-2xl bg-[#F5F5F7] border border-[#E5E5E7] space-y-3">
+                  <div className="flex items-center gap-2 text-[#1D1D1F] text-xs font-semibold uppercase tracking-wider">
+                    <TrendingUp className="w-4 h-4 text-[#0071E3]" />
                     <span>2. Quantified Business Impact</span>
                   </div>
-                  <p className="text-sm text-slate-200 leading-relaxed">
+                  <p className="text-sm text-[#48484A] leading-relaxed">
                     {analysis.business_impact}
                   </p>
                 </div>
 
-                {/* 3. Recommended Action */}
-                <div className="p-5 rounded-xl bg-gradient-to-br from-indigo-950/40 via-slate-950/80 to-slate-950 border border-indigo-500/40 md:col-span-2 space-y-3">
+                {/* 3. Recommended Action Plan */}
+                <div className="p-6 rounded-2xl bg-[#FAFAFA] border border-[#E5E5E7] md:col-span-2 space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider">
-                      <CheckCircle2 className="w-4 h-4" />
+                    <div className="flex items-center gap-2 text-[#1D1D1F] text-xs font-semibold uppercase tracking-wider">
+                      <CheckCircle2 className="w-4 h-4 text-[#34C759]" />
                       <span>3. Recommended Autonomous Action Plan</span>
                     </div>
-                    <span className="text-[10px] font-mono text-indigo-300">Executable via Procurement Pipeline</span>
+                    <span className="text-xs text-[#86868B]">1-Click Execution via Procurement Pipeline</span>
                   </div>
-                  <p className="text-base font-semibold text-white">
+                  <p className="text-base font-semibold text-[#1D1D1F]">
                     {analysis.recommended_action}
                   </p>
-                  <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
-                    <span className="text-xs text-slate-400">
-                      Auto-approval criteria verified. No manual SLA blockers detected.
+                  <div className="pt-4 border-t border-[#E5E5E7] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <span className="text-xs text-[#6E6E73]">
+                      Auto-approval criteria verified. EDI routing pre-authorized.
                     </span>
-                    <button className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-2 transition-colors">
-                      <span>Approve & Execute Recommendation</span>
+                    <button className="px-5 py-2.5 rounded-xl bg-[#0071E3] hover:bg-[#0066CC] text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-2xs">
+                      <span>Execute Action Safeguard</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ) : null}
         </div>
       </main>

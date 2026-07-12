@@ -3,16 +3,16 @@ import { SidebarNav } from '../components/SidebarNav';
 import {
   ShieldAlert,
   AlertTriangle,
-  TrendingDown,
   DollarSign,
   PackageX,
   Truck,
   CheckCircle2,
   Clock,
-  Zap,
   Filter,
-  RefreshCw
+  RefreshCw,
+  ArrowUpRight
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface WarRoomEvent {
   id: string;
@@ -81,138 +81,137 @@ export default function WarRoomPage() {
     : events.filter((e) => e.severity === filterSeverity);
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
+    <div className="flex min-h-screen bg-[#F5F5F7] text-[#1D1D1F] font-sans">
       <SidebarNav />
 
       <main className="flex-1 overflow-y-auto">
-        {/* Top Header */}
-        <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
+        {/* Apple Enterprise Header */}
+        <header className="border-b border-[#E5E5E7] bg-white/90 backdrop-blur-xl sticky top-0 z-30 px-8 py-5 flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold uppercase tracking-wider">
-                P0 War Room
+            <div className="flex items-center gap-2.5">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#FF453A]/10 text-[#FF453A] text-xs font-semibold uppercase tracking-wider">
+                Executive Operations Center
               </span>
-              <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                Real-Time AI Command Center
+              <h1 className="text-2xl font-semibold tracking-tight text-[#1D1D1F]">
+                Portfolio Risk & Capital Safeguards
               </h1>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Continuous live intelligence feed detecting inventory stockouts, supplier bottlenecks, and revenue risks.
+            <p className="text-xs text-[#6E6E73] mt-1">
+              Salesforce Einstein / Palantir Foundry telemetry synthesizing supply anomalies and working capital exposures.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <button
               onClick={fetchWarRoom}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 hover:text-white transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-[#E5E5E7] hover:bg-[#F5F5F7] text-xs font-medium text-[#1D1D1F] transition-all shadow-2xs"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-indigo-400' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-[#0071E3]' : 'text-[#86868B]'}`} />
               <span>Refresh Telemetry</span>
             </button>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>AI Core Connected</span>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#34C759]/10 text-[#34C759] text-xs font-semibold">
+              <span className="w-2 h-2 rounded-full bg-[#34C759] animate-pulse" />
+              <span>Telemetry Synchronized</span>
             </div>
           </div>
         </header>
 
-        <div className="p-6 space-y-6">
-          {/* P0 KPI Metrics Bar */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="p-4 rounded-xl bg-gradient-to-br from-rose-950/40 via-slate-900/80 to-slate-900/80 border border-rose-500/30 shadow-lg relative overflow-hidden">
+        <div className="p-8 max-w-7xl mx-auto space-y-8">
+          {/* Executive Summary Metrics Cards (Apple Stocks / Einstein Style) */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
+            <div className="apple-card p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-rose-300 uppercase tracking-wider">Revenue at Risk</span>
-                <DollarSign className="w-4 h-4 text-rose-400" />
+                <span className="text-xs font-medium text-[#6E6E73]">Revenue at Risk</span>
+                <DollarSign className="w-4 h-4 text-[#FF453A]" />
               </div>
-              <div className="text-2xl font-bold text-white mt-2 font-mono">
+              <div className="text-2xl font-semibold text-[#1D1D1F] mt-2">
                 ${metrics.revenue_at_risk.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
               </div>
-              <p className="text-[11px] text-rose-400/80 mt-1">Across 6 critical SKUs</p>
+              <p className="text-[11px] text-[#FF453A] mt-1 font-medium">Across 6 critical SKUs</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 shadow-lg">
+            <div className="apple-card p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-amber-400 uppercase tracking-wider">Potential Stockouts</span>
-                <PackageX className="w-4 h-4 text-amber-400" />
+                <span className="text-xs font-medium text-[#6E6E73]">Potential Stockouts</span>
+                <PackageX className="w-4 h-4 text-[#FF9F0A]" />
               </div>
-              <div className="text-2xl font-bold text-white mt-2 font-mono">
+              <div className="text-2xl font-semibold text-[#1D1D1F] mt-2">
                 {metrics.potential_stockouts} SKUs
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">≤ 7 days buffer remaining</p>
+              <p className="text-[11px] text-[#86868B] mt-1">≤ 7 days stock horizon</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 shadow-lg">
+            <div className="apple-card p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-indigo-400 uppercase tracking-wider">Critical Suppliers</span>
-                <Truck className="w-4 h-4 text-indigo-400" />
+                <span className="text-xs font-medium text-[#6E6E73]">Critical Suppliers</span>
+                <Truck className="w-4 h-4 text-[#0071E3]" />
               </div>
-              <div className="text-2xl font-bold text-white mt-2 font-mono">
+              <div className="text-2xl font-semibold text-[#1D1D1F] mt-2">
                 {metrics.critical_suppliers} Suppliers
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">SLA delays detected</p>
+              <p className="text-[11px] text-[#86868B] mt-1">SLA delays detected</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 shadow-lg">
+            <div className="apple-card p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-cyan-400 uppercase tracking-wider">Orders Attn Required</span>
-                <AlertTriangle className="w-4 h-4 text-cyan-400" />
+                <span className="text-xs font-medium text-[#6E6E73]">Orders Requiring Review</span>
+                <AlertTriangle className="w-4 h-4 text-[#FF9F0A]" />
               </div>
-              <div className="text-2xl font-bold text-white mt-2 font-mono">
+              <div className="text-2xl font-semibold text-[#1D1D1F] mt-2">
                 {metrics.orders_requiring_attention} POs
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">Pending auto-approval</p>
+              <p className="text-[11px] text-[#86868B] mt-1">Pending approval</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-gradient-to-br from-indigo-950/40 via-slate-900/80 to-slate-900/80 border border-indigo-500/30 shadow-lg">
+            <div className="apple-card p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-indigo-300 uppercase tracking-wider">AI Confidence Score</span>
-                <Zap className="w-4 h-4 text-indigo-400" />
+                <span className="text-xs font-medium text-[#6E6E73]">AI Consensus Confidence</span>
+                <CheckCircle2 className="w-4 h-4 text-[#34C759]" />
               </div>
-              <div className="text-2xl font-bold text-emerald-400 mt-2 font-mono">
+              <div className="text-2xl font-semibold text-[#34C759] mt-2">
                 {metrics.ai_confidence_score}%
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">Multi-model consensus</p>
+              <p className="text-[11px] text-[#86868B] mt-1">Multi-model audit</p>
             </div>
           </div>
 
-          {/* Critical Risks Action Panel */}
-          <div className="space-y-3">
+          {/* Actionable Executive Safeguard Cards */}
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 text-rose-400" />
-                Imminent Critical Inventory Risks
+              <h2 className="text-base font-semibold text-[#1D1D1F] flex items-center gap-2">
+                <span>Priority Action Safeguards</span>
               </h2>
-              <span className="text-xs text-slate-400 font-mono">Actionable AI Safeguards</span>
+              <span className="text-xs text-[#86868B]">Autonomous Replenishment Queued</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {criticalRisks.map((risk: any) => (
                 <div
                   key={risk.id}
-                  className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-rose-500/40 transition-all space-y-3 flex flex-col justify-between"
+                  className="apple-card p-6 flex flex-col justify-between space-y-5"
                 >
-                  <div>
+                  <div className="space-y-3">
                     <div className="flex items-start justify-between">
                       <div>
-                        <h3 className="font-bold text-white text-sm">{risk.product_name}</h3>
-                        <p className="text-xs text-slate-400 font-mono">{risk.sku} • {risk.supplier}</p>
+                        <h3 className="font-semibold text-[#1D1D1F] text-base">{risk.product_name}</h3>
+                        <p className="text-xs font-mono text-[#86868B] mt-0.5">{risk.sku} • {risk.supplier}</p>
                       </div>
-                      <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30 text-[10px] font-bold uppercase">
+                      <span className="px-2.5 py-1 rounded-full bg-[#FF453A]/10 text-[#FF453A] text-[11px] font-semibold">
                         {risk.days_until_stockout}d to Stockout
                       </span>
                     </div>
-                    <div className="mt-3 p-2.5 rounded-lg bg-slate-950/60 border border-slate-800/80 flex items-center justify-between text-xs">
-                      <span className="text-slate-400">{risk.risk_type}</span>
-                      <span className="font-mono font-bold text-rose-400">${risk.revenue_impact.toLocaleString()} At Risk</span>
+                    <div className="p-3 rounded-xl bg-[#F5F5F7] flex items-center justify-between text-xs">
+                      <span className="text-[#6E6E73]">{risk.risk_type}</span>
+                      <span className="font-semibold text-[#1D1D1F]">${risk.revenue_impact.toLocaleString()} Exposure</span>
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between gap-2">
-                    <span className="text-[11px] text-indigo-300 font-medium truncate flex-1">
-                      💡 {risk.recommended_action}
-                    </span>
-                    <button className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs transition-colors shrink-0">
-                      Execute AI PO
+                  <div className="pt-3 border-t border-[#F0F0F2] flex items-center justify-between gap-3">
+                    <p className="text-xs text-[#48484A] line-clamp-2 flex-1">
+                      {risk.recommended_action}
+                    </p>
+                    <button className="px-4 py-2 rounded-xl bg-[#0071E3] hover:bg-[#0066CC] text-white font-medium text-xs transition-colors shrink-0 shadow-xs">
+                      Approve PO
                     </button>
                   </div>
                 </div>
@@ -220,22 +219,22 @@ export default function WarRoomPage() {
             </div>
           </div>
 
-          {/* Live AI Risk Feed (50+ demo events timeline) */}
-          <div className="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
-            <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
-                <h3 className="font-bold text-sm text-white uppercase tracking-wider">
-                  Live AI Risk Feed ({events.length} Telemetry Events)
+          {/* Apple / Palantir Timeline Cards (Instead of Dark Terminal Logs) */}
+          <div className="apple-card overflow-hidden">
+            <div className="p-6 border-b border-[#E5E5E7] flex items-center justify-between bg-[#FAFAFA]">
+              <div>
+                <h3 className="font-semibold text-base text-[#1D1D1F]">
+                  Executive Operations Timeline ({events.length} Events)
                 </h3>
+                <p className="text-xs text-[#6E6E73] mt-0.5">Chronological risk assessment and AI-directed recommendations</p>
               </div>
 
               <div className="flex items-center gap-2">
-                <Filter className="w-3.5 h-3.5 text-slate-400" />
+                <Filter className="w-3.5 h-3.5 text-[#86868B]" />
                 <select
                   value={filterSeverity}
                   onChange={(e) => setFilterSeverity(e.target.value)}
-                  className="bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1 text-xs text-slate-300 focus:outline-none"
+                  className="bg-white border border-[#E5E5E7] rounded-xl px-3 py-1.5 text-xs text-[#1D1D1F] focus:outline-none shadow-2xs"
                 >
                   <option value="all">All Severities</option>
                   <option value="critical">Critical Only</option>
@@ -245,52 +244,54 @@ export default function WarRoomPage() {
               </div>
             </div>
 
-            <div className="max-h-[520px] overflow-y-auto divide-y divide-slate-800/60">
+            <div className="p-6 max-h-[580px] overflow-y-auto space-y-3">
               {filteredEvents.length === 0 ? (
-                <div className="p-8 text-center text-slate-500 text-xs">Loading telemetry feed...</div>
+                <div className="p-12 text-center text-[#86868B] text-xs">No matching timeline events</div>
               ) : (
                 filteredEvents.map((event) => (
-                  <div
+                  <motion.div
                     key={event.id}
-                    className="p-4 hover:bg-slate-800/40 transition-colors flex items-start justify-between gap-4"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-5 rounded-2xl bg-[#FAFAFA] border border-[#E5E5E7] hover:bg-white hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 text-xs font-mono text-slate-500 w-12 shrink-0">
+                    <div className="flex items-start gap-4">
+                      <span className="mt-0.5 text-xs font-mono text-[#86868B] w-14 shrink-0">
                         {event.time}
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
+                      </span>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-2.5">
                           <span
-                            className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${
+                            className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${
                               event.severity === 'critical'
-                                ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+                                ? 'bg-[#FF453A]/10 text-[#FF453A]'
                                 : event.severity === 'high'
-                                ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                                : 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
+                                ? 'bg-[#FF9F0A]/10 text-[#FF9F0A]'
+                                : 'bg-[#0071E3]/10 text-[#0071E3]'
                             }`}
                           >
-                            {event.severity}
+                            {event.severity.toUpperCase()}
                           </span>
-                          <span className="text-sm font-semibold text-white">{event.event_type}</span>
+                          <span className="text-sm font-semibold text-[#1D1D1F]">{event.event_type}</span>
                         </div>
-                        <p className="text-xs text-slate-300">
-                          <span className="font-bold text-indigo-300">Product: {event.product_name}</span> — Impact: {event.impact}
+                        <p className="text-xs text-[#48484A]">
+                          <span className="font-semibold text-[#1D1D1F]">{event.product_name}</span> — {event.impact}
                         </p>
-                        <p className="text-xs text-emerald-400 font-medium">
-                          ⚡ AI Recommendation: {event.recommendation}
+                        <p className="text-xs font-medium text-[#0071E3]">
+                          Recommendation: {event.recommendation}
                         </p>
                       </div>
                     </div>
 
                     <div className="text-right shrink-0 space-y-1">
-                      <div className="text-xs font-mono font-bold text-rose-400">
+                      <div className="text-sm font-semibold text-[#FF453A]">
                         ${event.revenue_risk?.toLocaleString()} Risk
                       </div>
-                      <div className="text-[10px] font-mono text-slate-500">
-                        Conf: {event.confidence_score}%
+                      <div className="text-[11px] text-[#86868B]">
+                        AI Confidence: {event.confidence_score}%
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))
               )}
             </div>

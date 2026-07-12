@@ -4,14 +4,11 @@ import {
   GitBranch,
   CheckCircle2,
   Clock,
-  ArrowRight,
   RefreshCw,
   ShieldCheck,
-  Zap,
-  Truck,
-  DollarSign,
   Activity
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function ProcurementAgentPage() {
   const [loading, setLoading] = useState(true);
@@ -45,122 +42,123 @@ export default function ProcurementAgentPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
+    <div className="flex min-h-screen bg-[#F5F5F7] text-[#1D1D1F] font-sans">
       <SidebarNav />
 
       <main className="flex-1 overflow-y-auto">
-        {/* Header */}
-        <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
+        {/* Apple Enterprise Mission Control Header */}
+        <header className="border-b border-[#E5E5E7] bg-white/90 backdrop-blur-xl sticky top-0 z-30 px-8 py-5 flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold uppercase tracking-wider">
-                P1 Autonomous Agent
+            <div className="flex items-center gap-2.5">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#0071E3]/10 text-[#0071E3] text-xs font-semibold uppercase tracking-wider">
+                Autonomous Mission Control
               </span>
-              <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                Autonomous Procurement Pipeline
+              <h1 className="text-2xl font-semibold tracking-tight text-[#1D1D1F]">
+                Procurement Agent Execution Network
               </h1>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Multi-stage AI agent chain forecasting demand, auditing risk, scoring suppliers, and generating purchase orders.
+            <p className="text-xs text-[#6E6E73] mt-1">
+              Level 4 Autonomous Multi-Agent chain forecasting demand, auditing SLA risk, and issuing EDI purchase orders.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <button
               onClick={fetchProcurement}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 hover:text-white transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-[#E5E5E7] hover:bg-[#F5F5F7] text-xs font-medium text-[#1D1D1F] transition-all shadow-2xs"
             >
-              <RefreshCw className="w-3.5 h-3.5" />
+              <RefreshCw className="w-3.5 h-3.5 text-[#86868B]" />
               <span>Sync Pipeline</span>
             </button>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-mono">
-              <ShieldCheck className="w-4 h-4 text-indigo-400" />
+            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#34C759]/10 text-[#34C759] text-xs font-semibold">
+              <ShieldCheck className="w-4 h-4" />
               <span>Level 4 Autonomous Execution</span>
             </div>
           </div>
         </header>
 
-        <div className="p-6 space-y-6">
-          {/* KPI Bar */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-              <span className="text-xs font-medium text-slate-400 uppercase">Auto-POs Generated</span>
-              <div className="text-2xl font-bold text-white mt-1 font-mono">{metrics.autonomous_pos_generated}</div>
-              <p className="text-[11px] text-emerald-400 mt-1">+14% vs last month</p>
+        <div className="p-8 max-w-7xl mx-auto space-y-8">
+          {/* Apple KPI Scorecards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div className="apple-card p-5">
+              <span className="text-xs font-medium text-[#6E6E73]">Auto-POs Generated</span>
+              <div className="text-2xl font-semibold text-[#1D1D1F] mt-2 font-mono">{metrics.autonomous_pos_generated}</div>
+              <p className="text-[11px] text-[#34C759] mt-1 font-medium">+14% automated routing</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-              <span className="text-xs font-medium text-slate-400 uppercase">Human Reviews Saved</span>
-              <div className="text-2xl font-bold text-white mt-1 font-mono">{metrics.human_interventions_saved} hrs</div>
-              <p className="text-[11px] text-indigo-400 mt-1">Direct PO EDI routing</p>
+
+            <div className="apple-card p-5">
+              <span className="text-xs font-medium text-[#6E6E73]">Human Reviews Saved</span>
+              <div className="text-2xl font-semibold text-[#1D1D1F] mt-2 font-mono">{metrics.human_interventions_saved} hrs</div>
+              <p className="text-[11px] text-[#0071E3] mt-1 font-medium">Direct PO execution</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-              <span className="text-xs font-medium text-slate-400 uppercase">Avg Pipeline Latency</span>
-              <div className="text-2xl font-bold text-white mt-1 font-mono">{metrics.avg_procurement_speed_seconds}s</div>
-              <p className="text-[11px] text-cyan-400 mt-1">End-to-end consensus</p>
+
+            <div className="apple-card p-5">
+              <span className="text-xs font-medium text-[#6E6E73]">Avg Pipeline Latency</span>
+              <div className="text-2xl font-semibold text-[#1D1D1F] mt-2 font-mono">{metrics.avg_procurement_speed_seconds}s</div>
+              <p className="text-[11px] text-[#86868B] mt-1">End-to-end consensus</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-              <span className="text-xs font-medium text-slate-400 uppercase">Supplier SLA Compliance</span>
-              <div className="text-2xl font-bold text-emerald-400 mt-1 font-mono">{metrics.supplier_sla_compliance}%</div>
-              <p className="text-[11px] text-slate-400 mt-1">Continuous scoring</p>
+
+            <div className="apple-card p-5">
+              <span className="text-xs font-medium text-[#6E6E73]">Supplier SLA Compliance</span>
+              <div className="text-2xl font-semibold text-[#34C759] mt-2 font-mono">{metrics.supplier_sla_compliance}%</div>
+              <p className="text-[11px] text-[#86868B] mt-1">Continuous scoring</p>
             </div>
           </div>
 
-          {/* Active Workflows & Pipeline Visualizer */}
+          {/* Active Workflows & Apple Pipeline Cards */}
           <div className="space-y-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-300">
-              Active Multi-Agent Procurement Pipelines
+            <h2 className="text-base font-semibold text-[#1D1D1F]">
+              Active Multi-Agent Procurement Workflows
             </h2>
 
             <div className="space-y-4">
               {workflows.map((wf: any) => (
                 <div
                   key={wf.id}
-                  className="p-5 rounded-xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4"
+                  className="apple-card p-6 space-y-5"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-sm font-bold text-indigo-400">{wf.id}</span>
-                        <span className="text-white font-bold text-base">{wf.product_name}</span>
-                        <span className="text-xs text-slate-400 font-mono">({wf.sku})</span>
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-sm font-semibold text-[#0071E3]">{wf.id}</span>
+                        <span className="text-[#1D1D1F] font-semibold text-base">{wf.product_name}</span>
+                        <span className="text-xs text-[#86868B] font-mono">({wf.sku})</span>
                       </div>
-                      <p className="text-xs text-slate-400 mt-0.5">
-                        Supplier: <span className="text-slate-300">{wf.supplier_name}</span> • Quantity: {wf.quantity} units • Total: ${wf.total_cost.toLocaleString()}
+                      <p className="text-xs text-[#6E6E73] mt-1">
+                        Supplier: <span className="text-[#1D1D1F] font-medium">{wf.supplier_name}</span> • Quantity: {wf.quantity} units • Total: ${wf.total_cost.toLocaleString()}
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${
-                          wf.status === 'Auto-Approved'
-                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                            : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                        }`}
-                      >
-                        {wf.status}
-                      </span>
-                    </div>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-semibold uppercase ${
+                        wf.status === 'Auto-Approved'
+                          ? 'bg-[#34C759]/10 text-[#34C759]'
+                          : 'bg-[#FF9F0A]/10 text-[#FF9F0A]'
+                      }`}
+                    >
+                      {wf.status}
+                    </span>
                   </div>
 
-                  {/* Visual 4-Stage Workflow Step Bar */}
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-                    {wf.steps?.map((step: any, idx: number) => (
+                  {/* 4-Stage Visual Step Bar */}
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    {wf.steps?.map((step: any) => (
                       <div
                         key={step.agent}
-                        className={`p-3 rounded-lg border flex flex-col justify-between ${
+                        className={`p-4 rounded-xl border flex flex-col justify-between ${
                           step.status === 'completed'
-                            ? 'bg-slate-950/80 border-emerald-500/40'
+                            ? 'bg-[#FAFAFA] border-[#34C759]/30'
                             : step.status === 'in_progress'
-                            ? 'bg-indigo-950/40 border-indigo-500/60 animate-pulse'
-                            : 'bg-slate-950/40 border-slate-800 text-slate-500'
+                            ? 'bg-[#0071E3]/5 border-[#0071E3]/40'
+                            : 'bg-[#F5F5F7] border-[#E5E5E7] text-[#86868B]'
                         }`}
                       >
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="font-bold">{step.agent}</span>
-                          {step.status === 'completed' && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />}
-                          {step.status === 'in_progress' && <Clock className="w-3.5 h-3.5 text-indigo-400 animate-spin" />}
+                        <div className="flex items-center justify-between text-xs font-semibold">
+                          <span className="text-[#1D1D1F]">{step.agent}</span>
+                          {step.status === 'completed' && <CheckCircle2 className="w-4 h-4 text-[#34C759]" />}
+                          {step.status === 'in_progress' && <Clock className="w-4 h-4 text-[#0071E3] animate-spin" />}
                         </div>
-                        <p className="text-[11px] mt-1.5 text-slate-300">{step.detail}</p>
+                        <p className="text-xs mt-2 text-[#6E6E73]">{step.detail}</p>
                       </div>
                     ))}
                   </div>
@@ -169,32 +167,32 @@ export default function ProcurementAgentPage() {
             </div>
           </div>
 
-          {/* Agent Activity Timeline (100 demo events) */}
-          <div className="rounded-xl bg-slate-900/80 border border-slate-800 overflow-hidden">
-            <div className="p-4 border-b border-slate-800 bg-slate-950/40 flex items-center justify-between">
-              <h3 className="font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
-                <Activity className="w-4 h-4 text-indigo-400" />
-                <span>Autonomous Agent Activity Timeline ({timeline.length} Events)</span>
+          {/* Agent Activity Timeline Table */}
+          <div className="apple-card overflow-hidden">
+            <div className="p-6 border-b border-[#E5E5E7] bg-[#FAFAFA] flex items-center justify-between">
+              <h3 className="font-semibold text-base text-[#1D1D1F] flex items-center gap-2">
+                <Activity className="w-4 h-4 text-[#0071E3]" />
+                <span>Autonomous Agent Audit Log ({timeline.length} Events)</span>
               </h3>
-              <span className="text-xs text-slate-400 font-mono">Continuous Telemetry Audit Log</span>
+              <span className="text-xs text-[#86868B] font-mono">Real-Time Telemetry</span>
             </div>
 
-            <div className="max-h-[460px] overflow-y-auto divide-y divide-slate-800/60">
+            <div className="max-h-[480px] overflow-y-auto divide-y divide-[#F0F0F2]">
               {timeline.map((act: any) => (
-                <div key={act.id} className="p-4 hover:bg-slate-800/40 transition-colors flex items-center justify-between gap-4">
+                <div key={act.id} className="p-5 hover:bg-[#F5F5F7]/70 transition-colors flex items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <span className="text-xs font-mono text-slate-500 w-16">{act.timestamp}</span>
+                    <span className="text-xs font-mono text-[#86868B] w-16">{act.timestamp}</span>
                     <div>
-                      <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] font-bold">
+                      <div className="flex items-center gap-2.5">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#0071E3]/10 text-[#0071E3] text-[11px] font-semibold">
                           {act.agent_name}
                         </span>
-                        <span className="font-semibold text-sm text-white">{act.action_title}</span>
+                        <span className="font-semibold text-sm text-[#1D1D1F]">{act.action_title}</span>
                       </div>
-                      <p className="text-xs text-slate-400 mt-0.5">{act.detail}</p>
+                      <p className="text-xs text-[#6E6E73] mt-0.5">{act.detail}</p>
                     </div>
                   </div>
-                  <span className="text-xs font-mono font-bold text-emerald-400 shrink-0">{act.metric}</span>
+                  <span className="text-xs font-mono font-semibold text-[#34C759] shrink-0">{act.metric}</span>
                 </div>
               ))}
             </div>

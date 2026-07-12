@@ -1,108 +1,93 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
+  LayoutDashboard,
   ShieldAlert,
   Bot,
   GitBranch,
   Activity,
   Layers,
-  LayoutDashboard,
   Search,
-  Zap,
-  Terminal,
-  Cpu,
-  TrendingUp,
-  AlertTriangle
+  CheckCircle2,
+  ChevronRight,
+  Sparkles,
+  Command
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const SidebarNav: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname;
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   const navItems = [
-    {
-      label: 'Platform Overview',
-      path: '/',
-      icon: LayoutDashboard,
-      badge: 'Live',
-      badgeColor: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-    },
-    {
-      label: 'AI War Room',
-      path: '/war-room',
-      icon: ShieldAlert,
-      badge: 'P0',
-      badgeColor: 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
-    },
-    {
-      label: 'Executive Copilot',
-      path: '/copilot',
-      icon: Bot,
-      badge: 'AI Analyst',
-      badgeColor: 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
-    },
-    {
-      label: 'Procurement Agent',
-      path: '/agents/procurement',
-      icon: GitBranch,
-      badge: 'Autonomous',
-      badgeColor: 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
-    },
-    {
-      label: 'Digital Twin Sim',
-      path: '/simulation',
-      icon: Activity,
-      badge: 'What-If',
-      badgeColor: 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-    },
-    {
-      label: 'Multi-Agent Layer',
-      path: '/agents',
-      icon: Layers,
-      badge: '5 Active',
-      badgeColor: 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-    }
+    { label: 'Executive Dashboard', path: '/', icon: LayoutDashboard },
+    { label: 'Operations Center', path: '/war-room', icon: ShieldAlert },
+    { label: 'Executive Copilot', path: '/copilot', icon: Bot },
+    { label: 'Procurement Agent', path: '/agents/procurement', icon: GitBranch },
+    { label: 'Digital Twin Sim', path: '/simulation', icon: Activity },
+    { label: 'Mission Control', path: '/agents', icon: Layers }
   ];
+
+  // Listen for Cmd+K keyboard shortcut
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleSelectNav = (path: string) => {
+    setSearchOpen(false);
+    navigate(path);
+  };
+
+  const filteredItems = navItems.filter(item =>
+    item.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <>
-      <aside className="w-64 bg-slate-950/90 border-r border-slate-800/80 backdrop-blur-xl flex flex-col h-screen sticky top-0 shrink-0 z-40 select-none">
-        {/* Brand Header */}
-        <div className="p-4 border-b border-slate-800/80 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform">
-              <Cpu className="w-4 h-4 text-white animate-pulse" />
+      <aside className="w-64 bg-white/80 backdrop-blur-xl border-r border-[#E5E5E7] flex flex-col h-screen sticky top-0 shrink-0 z-40 select-none py-6 px-4">
+        {/* Apple Brand Header */}
+        <div className="px-2 pb-6 flex items-center justify-between border-b border-[#F0F0F2]">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-8 h-8 rounded-xl bg-[#000000] text-white flex items-center justify-center shadow-sm">
+              <span className="font-bold text-sm tracking-tight">IP</span>
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-bold text-sm tracking-tight text-white font-mono">INVENTORYPULSE</span>
-                <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">AI</span>
+                <span className="font-semibold text-sm text-[#1D1D1F] tracking-tight">InventoryPulse AI</span>
               </div>
-              <p className="text-[10px] text-slate-400 tracking-wider font-mono">AUTONOMOUS OPS v2.4</p>
+              <p className="text-[11px] text-[#86868B]">Enterprise Operations</p>
             </div>
           </Link>
         </div>
 
-        {/* Global Command Search Bar */}
-        <div className="p-3 border-b border-slate-800/60">
+        {/* Command Palette Trigger */}
+        <div className="py-4">
           <button
             onClick={() => setSearchOpen(true)}
-            className="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-slate-900/80 border border-slate-800 hover:border-slate-700 text-slate-400 text-xs transition-colors group"
+            className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#F5F5F7] hover:bg-[#EAEAEA] text-[#86868B] text-xs transition-colors"
           >
-            <div className="flex items-center gap-2">
-              <Search className="w-3.5 h-3.5 text-slate-500 group-hover:text-indigo-400 transition-colors" />
-              <span>Search Command...</span>
+            <div className="flex items-center gap-2.5">
+              <Search className="w-3.5 h-3.5 text-[#86868B]" />
+              <span className="font-medium">Search or Command</span>
             </div>
-            <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-400 font-mono">⌘K</kbd>
+            <kbd className="px-1.5 py-0.5 rounded bg-white border border-[#E5E5E7] text-[10px] text-[#6E6E73] font-medium shadow-2xs">⌘K</kbd>
           </button>
         </div>
 
         {/* Navigation Section */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-1">
-          <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-2 py-1.5">
-            Operations Command
+        <nav className="flex-1 space-y-1 overflow-y-auto">
+          <div className="text-[11px] font-semibold text-[#86868B] px-3 py-2">
+            INTELLIGENCE
           </div>
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -111,92 +96,95 @@ export const SidebarNav: React.FC = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
+                className={`relative flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-colors ${
                   isActive
-                    ? 'bg-gradient-to-r from-indigo-600/20 to-purple-600/10 text-white border border-indigo-500/40 shadow-sm shadow-indigo-500/10'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-900/70 border border-transparent'
+                    ? 'text-[#0071E3] font-semibold'
+                    : 'text-[#48484A] hover:text-[#1D1D1F] hover:bg-[#F5F5F7]'
                 }`}
               >
-                <div className="flex items-center gap-2.5">
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
+                {isActive && (
+                  <motion.div
+                    layoutId="activeSideNav"
+                    className="absolute inset-0 bg-[#0071E3]/10 rounded-xl"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
+                <div className="flex items-center gap-3 relative z-10">
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#0071E3]' : 'text-[#86868B]'}`} />
                   <span>{item.label}</span>
                 </div>
-                {item.badge && (
-                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${item.badgeColor}`}>
-                    {item.badge}
-                  </span>
+                {isActive && (
+                  <ChevronRight className="w-3.5 h-3.5 text-[#0071E3] relative z-10" />
                 )}
               </Link>
             );
           })}
-        </div>
+        </nav>
 
-        {/* Live System Health & Activity Feed Widget */}
-        <div className="p-3 border-t border-slate-800/80 bg-slate-950/60 space-y-2.5">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-400 font-medium flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              AI Core Status
-            </span>
-            <span className="text-emerald-400 font-mono text-[11px] font-bold">ALL SYSTEMS GO</span>
+        {/* Subtle Apple System Health Indicator */}
+        <div className="pt-4 border-t border-[#F0F0F2] px-3 flex items-center justify-between text-xs text-[#6E6E73]">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#34C759]" />
+            <span className="font-medium">System Normal</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800/80 space-y-1.5">
-            <div className="flex items-center justify-between text-[11px] text-slate-400">
-              <span>Latency</span>
-              <span className="text-white font-mono">14.2 ms</span>
-            </div>
-            <div className="flex items-center justify-between text-[11px] text-slate-400">
-              <span>Active Agents</span>
-              <span className="text-indigo-400 font-mono font-bold">5 / 5 Online</span>
-            </div>
-            <div className="flex items-center justify-between text-[11px] text-slate-400">
-              <span>Auto-POs Today</span>
-              <span className="text-emerald-400 font-mono font-bold">142 Executed</span>
-            </div>
-          </div>
+          <span className="text-[11px] text-[#86868B]">v2.4 Apple Enterprise</span>
         </div>
       </aside>
 
-      {/* Quick Search Modal */}
-      {searchOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-start justify-center pt-24 p-4 animate-in fade-in">
-          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden">
-            <div className="p-4 border-b border-slate-800 flex items-center gap-3">
-              <Search className="w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                autoFocus
-                placeholder="Search products, SKUs, suppliers, AI agents, or war room events..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent text-white text-sm focus:outline-none placeholder-slate-500"
-              />
-              <button
-                onClick={() => setSearchOpen(false)}
-                className="px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white text-xs font-mono"
-              >
-                ESC
-              </button>
-            </div>
-            <div className="p-2 space-y-1 max-h-80 overflow-y-auto">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
+      {/* World-Class Apple / Linear Command Palette (⌘K) */}
+      <AnimatePresence>
+        {searchOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-[#000000]/40 backdrop-blur-md z-50 flex items-start justify-center pt-24 p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: -10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: -10 }}
+              className="w-full max-w-xl bg-white border border-[#E5E5E7] rounded-2xl shadow-2xl overflow-hidden"
+            >
+              <div className="p-4 border-b border-[#F0F0F2] flex items-center gap-3">
+                <Command className="w-4 h-4 text-[#86868B]" />
+                <input
+                  type="text"
+                  autoFocus
+                  placeholder="Type a command or search pages..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-transparent text-[#1D1D1F] text-sm focus:outline-none placeholder-[#86868B]"
+                />
+                <button
                   onClick={() => setSearchOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-800/60 text-slate-300 hover:text-white transition-colors"
+                  className="px-2 py-1 rounded bg-[#F5F5F7] text-[#6E6E73] hover:text-[#1D1D1F] text-xs font-medium"
                 >
-                  <div className="flex items-center gap-2 text-xs">
-                    <item.icon className="w-4 h-4 text-indigo-400" />
-                    <span>Go to {item.label}</span>
-                  </div>
-                  <span className="text-[10px] text-slate-500 font-mono">{item.path}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+                  ESC
+                </button>
+              </div>
+              <div className="p-2 space-y-1 max-h-80 overflow-y-auto">
+                <div className="px-3 py-1.5 text-[11px] font-semibold text-[#86868B] uppercase">
+                  Navigate Modules
+                </div>
+                {filteredItems.map((item) => (
+                  <button
+                    key={item.path}
+                    onClick={() => handleSelectNav(item.path)}
+                    className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#F5F5F7] text-[#1D1D1F] text-left transition-colors"
+                  >
+                    <div className="flex items-center gap-3 text-xs font-medium">
+                      <item.icon className="w-4 h-4 text-[#0071E3]" />
+                      <span>{item.label}</span>
+                    </div>
+                    <span className="text-[11px] text-[#86868B]">{item.path}</span>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { SidebarNav } from '../components/SidebarNav';
 import {
   Activity,
-  Play,
+  Sliders,
   TrendingUp,
   DollarSign,
   PackageX,
-  ShieldAlert,
-  Sliders,
-  RefreshCw,
   Sparkles,
-  CheckCircle2
+  CheckCircle2,
+  RefreshCw
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -96,50 +95,50 @@ export default function SimulationPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
+    <div className="flex min-h-screen bg-[#F5F5F7] text-[#1D1D1F] font-sans">
       <SidebarNav />
 
       <main className="flex-1 overflow-y-auto">
-        {/* Header */}
-        <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
+        {/* Bloomberg Terminal / Apple Enterprise Header */}
+        <header className="border-b border-[#E5E5E7] bg-white/90 backdrop-blur-xl sticky top-0 z-30 px-8 py-5 flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold uppercase tracking-wider">
-                P1 Digital Twin
+            <div className="flex items-center gap-2.5">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#FF9F0A]/10 text-[#FF9F0A] text-xs font-semibold uppercase tracking-wider">
+                Supply Chain Digital Twin
               </span>
-              <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                Supply Chain Digital Twin What-If Simulator
+              <h1 className="text-2xl font-semibold tracking-tight text-[#1D1D1F]">
+                Forward What-If Scenario Builder
               </h1>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Simulate market volatility, lead-time drift, and supplier disruptions across 12-week forward horizons.
+            <p className="text-xs text-[#6E6E73] mt-1">
+              Monte Carlo stochastic simulation modeling market surge, supplier SLA drift, and portfolio capital requirements.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-mono">
-            <Sparkles className="w-4 h-4 text-indigo-400" />
-            <span>Monte Carlo Stochastic Engine</span>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0071E3]/10 text-[#0071E3] text-xs font-semibold">
+            <Sparkles className="w-4 h-4" />
+            <span>Stochastic Engine Synchronized</span>
           </div>
         </header>
 
-        <div className="p-6 space-y-6">
-          {/* Scenario Preset Library Buttons */}
-          <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              Scenario Library Presets
+        <div className="p-8 max-w-7xl mx-auto space-y-8">
+          {/* Scenario Library Presets */}
+          <div className="space-y-3">
+            <span className="text-xs font-semibold text-[#86868B] uppercase tracking-wider">
+              Scenario Preset Library
             </span>
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-3">
               {Object.entries(scenarios).map(([key, preset]: [string, any]) => (
                 <button
                   key={key}
                   onClick={() => applyPreset(key, preset)}
-                  className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all flex items-center gap-2 ${
+                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-2 ${
                     activeScenario === key
-                      ? 'bg-amber-500/20 text-amber-300 border-amber-500/50 shadow-lg shadow-amber-500/10'
-                      : 'bg-slate-900/80 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white'
+                      ? 'bg-[#1D1D1F] text-white border-[#1D1D1F] shadow-sm'
+                      : 'bg-white text-[#48484A] border-[#E5E5E7] hover:border-[#1D1D1F] hover:text-[#1D1D1F]'
                   }`}
                 >
-                  <Activity className="w-3.5 h-3.5 text-amber-400" />
+                  <Activity className="w-3.5 h-3.5 text-[#0071E3]" />
                   <span>{preset.name}</span>
                 </button>
               ))}
@@ -147,22 +146,22 @@ export default function SimulationPage() {
           </div>
 
           {/* Sliders + Output Cards Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column: Interactive Controls */}
-            <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-indigo-400" />
-                  <span>Simulation Parameters</span>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Column: What-If Parameter Sliders */}
+            <div className="apple-card p-6 space-y-6">
+              <div className="flex items-center justify-between border-b border-[#E5E5E7] pb-4">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-[#1D1D1F] flex items-center gap-2">
+                  <Sliders className="w-4 h-4 text-[#0071E3]" />
+                  <span>Simulation Controls</span>
                 </h2>
-                <span className="text-xs font-mono text-indigo-400">Real-Time Recalc</span>
+                <span className="text-xs font-mono text-[#0071E3] font-medium">Real-Time</span>
               </div>
 
-              {/* Slider 1: Demand Increase */}
-              <div className="space-y-2">
+              {/* Slider 1: Demand Surge */}
+              <div className="space-y-2.5">
                 <div className="flex justify-between text-xs font-medium">
-                  <span className="text-slate-300">Demand Surge</span>
-                  <span className="text-indigo-400 font-mono font-bold">+{demandPct}%</span>
+                  <span className="text-[#48484A]">Demand Surge Index</span>
+                  <span className="text-[#0071E3] font-mono font-semibold">+{demandPct}%</span>
                 </div>
                 <input
                   type="range"
@@ -170,15 +169,15 @@ export default function SimulationPage() {
                   max="150"
                   value={demandPct}
                   onChange={(e) => handleSliderChange(Number(e.target.value), delayDays, leadTime, volatility)}
-                  className="w-full accent-indigo-500 cursor-pointer"
+                  className="w-full accent-[#0071E3] cursor-pointer"
                 />
               </div>
 
-              {/* Slider 2: Supplier Delay Days */}
-              <div className="space-y-2">
+              {/* Slider 2: Supplier SLA Delay */}
+              <div className="space-y-2.5">
                 <div className="flex justify-between text-xs font-medium">
-                  <span className="text-slate-300">Supplier SLA Delay</span>
-                  <span className="text-rose-400 font-mono font-bold">+{delayDays} Days</span>
+                  <span className="text-[#48484A]">Supplier SLA Delay</span>
+                  <span className="text-[#FF453A] font-mono font-semibold">+{delayDays} Days</span>
                 </div>
                 <input
                   type="range"
@@ -186,15 +185,15 @@ export default function SimulationPage() {
                   max="30"
                   value={delayDays}
                   onChange={(e) => handleSliderChange(demandPct, Number(e.target.value), leadTime, volatility)}
-                  className="w-full accent-rose-500 cursor-pointer"
+                  className="w-full accent-[#FF453A] cursor-pointer"
                 />
               </div>
 
-              {/* Slider 3: Lead Time */}
-              <div className="space-y-2">
+              {/* Slider 3: Base Lead Time */}
+              <div className="space-y-2.5">
                 <div className="flex justify-between text-xs font-medium">
-                  <span className="text-slate-300">Base Lead Time</span>
-                  <span className="text-amber-400 font-mono font-bold">{leadTime} Days</span>
+                  <span className="text-[#48484A]">Base Lead Time</span>
+                  <span className="text-[#FF9F0A] font-mono font-semibold">{leadTime} Days</span>
                 </div>
                 <input
                   type="range"
@@ -202,15 +201,15 @@ export default function SimulationPage() {
                   max="30"
                   value={leadTime}
                   onChange={(e) => handleSliderChange(demandPct, delayDays, Number(e.target.value), volatility)}
-                  className="w-full accent-amber-500 cursor-pointer"
+                  className="w-full accent-[#FF9F0A] cursor-pointer"
                 />
               </div>
 
-              {/* Slider 4: Market Volatility */}
-              <div className="space-y-2">
+              {/* Slider 4: Market Volatility Index */}
+              <div className="space-y-2.5">
                 <div className="flex justify-between text-xs font-medium">
-                  <span className="text-slate-300">Market Volatility Index</span>
-                  <span className="text-cyan-400 font-mono font-bold">{volatility}%</span>
+                  <span className="text-[#48484A]">Market Volatility</span>
+                  <span className="text-[#1D1D1F] font-mono font-semibold">{volatility}%</span>
                 </div>
                 <input
                   type="range"
@@ -218,62 +217,65 @@ export default function SimulationPage() {
                   max="100"
                   value={volatility}
                   onChange={(e) => handleSliderChange(demandPct, delayDays, leadTime, Number(e.target.value))}
-                  className="w-full accent-cyan-500 cursor-pointer"
+                  className="w-full accent-[#1D1D1F] cursor-pointer"
                 />
               </div>
             </div>
 
-            {/* Right Column: Simulation Output Scorecards & Chart */}
+            {/* Right Column: Output Scorecards & Chart */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Output Cards */}
+              {/* Output Scorecards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-                  <span className="text-xs text-slate-400 uppercase">Revenue Impact</span>
-                  <div className="text-xl font-bold text-emerald-400 mt-1 font-mono">
+                <div className="apple-card p-5">
+                  <span className="text-xs text-[#6E6E73] font-medium">Revenue Delta</span>
+                  <div className="text-xl font-semibold text-[#34C759] mt-2 font-mono">
                     +${output.revenue_impact?.toLocaleString()}
                   </div>
-                  <p className="text-[10px] text-slate-400">Projected delta</p>
+                  <p className="text-[11px] text-[#86868B] mt-1">Projected horizon</p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-                  <span className="text-xs text-slate-400 uppercase">Projected Stockouts</span>
-                  <div className="text-xl font-bold text-rose-400 mt-1 font-mono">
+                <div className="apple-card p-5">
+                  <span className="text-xs text-[#6E6E73] font-medium">Projected Stockouts</span>
+                  <div className="text-xl font-semibold text-[#FF453A] mt-2 font-mono">
                     {output.stockouts} SKUs
                   </div>
-                  <p className="text-[10px] text-slate-400">Under simulated stress</p>
+                  <p className="text-[11px] text-[#86868B] mt-1">Under simulated stress</p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-                  <span className="text-xs text-slate-400 uppercase">Inventory Cost</span>
-                  <div className="text-xl font-bold text-white mt-1 font-mono">
+                <div className="apple-card p-5">
+                  <span className="text-xs text-[#6E6E73] font-medium">Capital Required</span>
+                  <div className="text-xl font-semibold text-[#1D1D1F] mt-2 font-mono">
                     ${output.inventory_cost?.toLocaleString()}
                   </div>
-                  <p className="text-[10px] text-slate-400">Working capital required</p>
+                  <p className="text-[11px] text-[#86868B] mt-1">Working reserve</p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-                  <span className="text-xs text-slate-400 uppercase">Risk Score</span>
-                  <div className="text-xl font-bold text-amber-400 mt-1 font-mono">
+                <div className="apple-card p-5">
+                  <span className="text-xs text-[#6E6E73] font-medium">Composite Risk</span>
+                  <div className="text-xl font-semibold text-[#FF9F0A] mt-2 font-mono">
                     {output.risk_score} / 100
                   </div>
-                  <p className="text-[10px] text-slate-400">Composite vulnerability</p>
+                  <p className="text-[11px] text-[#86868B] mt-1">Stochastic index</p>
                 </div>
               </div>
 
-              {/* Interactive Chart */}
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
+              {/* 12-Week Forward Digital Twin Recharts Projection */}
+              <div className="apple-card p-6 space-y-5">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-sm text-white uppercase tracking-wider">
-                    12-Week Forward Digital Twin Projection
-                  </h3>
-                  <div className="flex items-center gap-4 text-xs font-medium">
-                    <span className="flex items-center gap-1.5 text-indigo-400">
-                      <span className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
-                      Projected Demand
+                  <div>
+                    <h3 className="font-semibold text-base text-[#1D1D1F]">
+                      12-Week Stochastic Forward Horizon
+                    </h3>
+                    <p className="text-xs text-[#6E6E73]">Demand trajectory vs available safety stock buffer</p>
+                  </div>
+                  <div className="flex items-center gap-5 text-xs font-medium">
+                    <span className="flex items-center gap-2 text-[#0071E3]">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#0071E3]" />
+                      Simulated Demand
                     </span>
-                    <span className="flex items-center gap-1.5 text-emerald-400">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                      Available Stock Buffer
+                    <span className="flex items-center gap-2 text-[#34C759]">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#34C759]" />
+                      Available Buffer
                     </span>
                   </div>
                 </div>
@@ -282,39 +284,39 @@ export default function SimulationPage() {
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={chartSeries}>
                       <defs>
-                        <linearGradient id="demandGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#6366f1" stopOpacity={0.4} />
-                          <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                        <linearGradient id="simDemand" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#0071E3" stopOpacity={0.18} />
+                          <stop offset="95%" stopColor="#0071E3" stopOpacity={0} />
                         </linearGradient>
-                        <linearGradient id="stockGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
-                          <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                        <linearGradient id="simStock" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#34C759" stopOpacity={0.18} />
+                          <stop offset="95%" stopColor="#34C759" stopOpacity={0} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                      <XAxis dataKey="week" stroke="#64748b" fontSize={11} />
-                      <YAxis stroke="#64748b" fontSize={11} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E7" vertical={false} />
+                      <XAxis dataKey="week" stroke="#86868B" fontSize={11} tickLine={false} axisLine={false} />
+                      <YAxis stroke="#86868B" fontSize={11} tickLine={false} axisLine={false} />
                       <Tooltip
-                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', fontSize: '12px' }}
+                        contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E5E5E7', borderRadius: '12px', fontSize: '12px' }}
                       />
-                      <Area type="monotone" dataKey="projected_demand" stroke="#6366f1" fillOpacity={1} fill="url(#demandGrad)" />
-                      <Area type="monotone" dataKey="available_stock" stroke="#10b981" fillOpacity={1} fill="url(#stockGrad)" />
+                      <Area type="monotone" dataKey="projected_demand" stroke="#0071E3" strokeWidth={2} fillOpacity={1} fill="url(#simDemand)" />
+                      <Area type="monotone" dataKey="available_stock" stroke="#34C759" strokeWidth={2} fillOpacity={1} fill="url(#simStock)" />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
               </div>
 
-              {/* Recommended Action Safeguards */}
-              <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+              {/* Executive Safeguard Recommendations */}
+              <div className="apple-card p-6 space-y-3">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#0071E3] flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>AI Recommended Safeguards for this Simulation Scenario</span>
+                  <span>Executive Capital & Inventory Safeguards</span>
                 </span>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   {output.recommended_actions?.map((rec: string, idx: number) => (
-                    <div key={idx} className="text-xs text-slate-300 flex items-center gap-2">
-                      <span className="text-indigo-400 font-mono">•</span>
-                      <span>{rec}</span>
+                    <div key={idx} className="text-xs text-[#1D1D1F] flex items-center gap-2.5">
+                      <span className="text-[#0071E3] font-mono">•</span>
+                      <span className="font-medium">{rec}</span>
                     </div>
                   ))}
                 </div>
