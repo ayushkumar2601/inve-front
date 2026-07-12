@@ -33,6 +33,19 @@ export default function WarRoomPage() {
   const [data, setData] = useState<any>(null);
   const [filterSeverity, setFilterSeverity] = useState<string>('all');
   const [refreshing, setRefreshing] = useState(false);
+  const [approvedPOs, setApprovedPOs] = useState<Record<string, boolean>>({});
+  const [approvingPOs, setApprovingPOs] = useState<Record<string, boolean>>({});
+  const [notification, setNotification] = useState<string | null>(null);
+
+  const handleApprovePO = (riskId: string, productName: string, sku: string) => {
+    setApprovingPOs(prev => ({ ...prev, [riskId]: true }));
+    setTimeout(() => {
+      setApprovingPOs(prev => ({ ...prev, [riskId]: false }));
+      setApprovedPOs(prev => ({ ...prev, [riskId]: true }));
+      setNotification(`Autonomous EDI Purchase Order executed for ${productName} (${sku}) via Snowflake Pipeline.`);
+      setTimeout(() => setNotification(null), 6000);
+    }, 600);
+  };
 
   const fetchWarRoom = async () => {
     setRefreshing(true);
@@ -115,6 +128,20 @@ export default function WarRoomPage() {
             </div>
           </div>
         </header>
+
+        {notification && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-8 mt-5 p-4 rounded-2xl bg-[#34C759]/10 border border-[#34C759]/30 flex items-center justify-between text-xs font-medium text-[#1D1D1F]"
+          >
+            <div className="flex items-center gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-[#34C759]" />
+              <span>{notification}</span>
+            </div>
+            <span className="text-[11px] font-mono text-[#34C759] font-semibold uppercase">EDI 200 OK</span>
+          </motion.div>
+        )}
 
         <div className="p-8 max-w-7xl mx-auto space-y-8">
           {/* Executive Summary Metrics Cards (Apple Stocks / Einstein Style) */}
@@ -210,8 +237,30 @@ export default function WarRoomPage() {
                     <p className="text-xs text-[#48484A] line-clamp-2 flex-1">
                       {risk.recommended_action}
                     </p>
-                    <button className="px-4 py-2 rounded-xl bg-[#0071E3] hover:bg-[#0066CC] text-white font-medium text-xs transition-colors shrink-0 shadow-xs">
-                      Approve PO
+                    <button
+                      onClick={() => handleApprovePO(risk.id, risk.product_name, risk.sku)}
+                      disabled={approvingPOs[risk.id] || approvedPOs[risk.id]}
+                      className={`px-4 py-2 rounded-xl font-medium text-xs transition-all shrink-0 shadow-xs flex items-center gap-1.5 ${
+                        approvedPOs[risk.id]
+                          ? 'bg-[#34C759] text-white cursor-default'
+                          : approvingPOs[risk.id]
+                          ? 'bg-[#0071E3]/70 text-white cursor-wait'
+                          : 'bg-[#0071E3] hover:bg-[#0066CC] text-white'
+                      }`}
+                    >
+                      {approvingPOs[risk.id] ? (
+                        <>
+                          <Clock className="w-3.5 h-3.5 animate-spin" />
+                          <span>Routing EDI...</span>
+                        </>
+                      ) : approvedPOs[risk.id] ? (
+                        <>
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>PO Executed</span>
+                        </>
+                      ) : (
+                        <span>Approve PO</span>
+                      )}
                     </button>
                   </div>
                 </div>
